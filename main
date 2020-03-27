@@ -1,0 +1,493 @@
+from tkinter import *
+from math import sqrt
+
+root = Tk()
+root.title('Mega Calculator')
+root.geometry('400x420+0+0')
+root.resizable(False, False)
+root['bg']='#0f0f0f'
+member = [0, 0]
+memb_num = 0
+ind = 0
+new = True
+action = float.__add__
+# -----------------------------------------------
+
+def click_0(event):
+    btn_0['state'] = 'active'
+    global new
+    if not all_nones() and not new:
+        inp['text'] += '0'
+    else:
+        inp['text'] = '0'
+    new = False
+def release_0(event):
+    btn_0['state'] = 'normal'
+
+def all_nones():
+    result = True
+    for char in inp['text']:
+        if char != '0':
+            result = False
+            break
+    return result
+
+def click_1(event):
+    btn_1['state'] = 'active'
+    global new
+    if not all_nones() and not new:
+        inp['text'] += '1'
+    else:
+        inp['text'] = '1'
+    new = False
+def release_1(event):
+    btn_1['state'] = 'normal'
+
+def click_2(event):
+    btn_2['state'] = 'active'
+    global new
+    if not all_nones() and not new:
+        inp['text'] += '2'
+    else:
+        inp['text'] = '2'
+    new = False
+def release_2(event):
+    btn_2['state'] = 'normal'
+
+def click_3(event):
+    btn_3['state'] = 'active'
+    global new
+    if not all_nones() and not new:
+        inp['text'] += '3'
+    else:
+        inp['text'] = '3'
+    new = False
+def release_3(event):
+    btn_3['state'] = 'normal'
+
+def click_4(event):
+    btn_4['state'] = 'active'
+    global new
+    if not all_nones() and not new:
+        inp['text'] += '4'
+    else:
+        inp['text'] = '4'
+    new = False
+def release_4(event):
+    btn_4['state'] = 'normal'
+
+def click_5(event):
+    btn_5['state'] = 'active'
+    global new
+    if not all_nones() and not new:
+        inp['text'] += '5'
+    else:
+        inp['text'] = '5'
+    new = False
+def release_5(event):
+    btn_5['state'] = 'normal'
+
+def click_6(event):
+    btn_6['state'] = 'active'
+    global new
+    if not all_nones() and not new:
+        inp['text'] += '6'
+    else:
+        inp['text'] = '6'
+    new = False
+def release_6(event):
+    btn_6['state'] = 'normal'
+
+def click_7(event):
+    btn_7['state'] = 'active'
+    global new
+    if not all_nones() and not new:
+        inp['text'] += '7'
+    else:
+        inp['text'] = '7'
+    new = False
+def release_7(event):
+    btn_7['state'] = 'normal'
+
+def click_8(event):
+    btn_8['state'] = 'active'
+    global new
+    if not all_nones() and not new:
+        inp['text'] += '8'
+    else:
+        inp['text'] = '8'
+    new = False
+def release_8(event):
+    btn_8['state'] = 'normal'
+
+def click_9(event):
+    btn_9['state'] = 'active'
+    global new
+    if not all_nones() and not new:
+        inp['text'] += '9'
+    else:
+        inp['text'] = '9'
+    new = False
+def release_9(event):
+    btn_9['state'] = 'normal'
+
+def round_mant(text):  # запись очень больших и маленьких чисел с мантиссой
+    preinp = str(text)
+    if 0.001 < abs(text) < 10000:
+        preinp = str(round(text, 6))
+    else:
+        if len(preinp) > 11:
+            preinp = f'{text:.{5}e}'
+        i = 4
+        while i >= 0:
+            last = preinp
+            preinp = f'{text:.{i}e}'
+            if float(preinp) != float(last):
+                preinp = last
+                break
+            i -= 1
+    if float(int(float(preinp))) == float(preinp) and abs(int(float(preinp))) < 100000:
+        preinp = str(int(float(preinp)))
+    return preinp
+
+def click_plus(event):
+    btn_plus['state'] = 'active'
+    if not (inp['text'][-1] in ('+', '-', '×', '÷', '√', '^')):
+        inp['text'] += '+'
+    else:
+        inp['text'] = inp['text'][:-1] + '+'
+    global new
+    new = False
+    global have_dot
+    have_dot = False
+def release_plus(event):
+    btn_plus['state'] = 'normal'
+
+def click_min(event):
+    btn_min['state'] = 'active'
+    if not (inp['text'][-1] in ('+', '-', '×', '÷', '√', '^')):
+        inp['text'] += '-'
+    else:
+        inp['text'] = inp['text'][:-1] + '-'
+    global new
+    new = False
+    global have_dot
+    have_dot = False
+def release_min(event):
+    btn_min['state'] = 'normal'
+
+def click_mult(event):
+    btn_mult['state'] = 'active'
+    if not (inp['text'][-1] in ('+', '-', '×', '÷', '√', '^')):
+        inp['text'] += '×'
+    else:
+        inp['text'] = inp['text'][:-1] + '×'
+    global new
+    new = False
+    global have_dot
+    have_dot = False
+def release_mult(event):
+    btn_mult['state'] = 'normal'
+
+def click_div(event):
+    btn_div['state'] = 'active'
+    if not (inp['text'][-1] in ('+', '-', '×', '÷', '√', '^')):
+        inp['text'] += '÷'
+    else:
+        inp['text'] = inp['text'][:-1] + '÷'
+    global new
+    new = False
+    global have_dot
+    have_dot = False
+def release_div(event):
+    btn_div['state'] = 'normal'
+
+def click_sqrt(event):
+    btn_sqrt['state'] = 'active'
+    global new
+    if not all_nones() and not new:
+        inp['text'] += '√'
+    else:
+        inp['text'] = '√'
+    new = False
+    global have_dot
+    have_dot = False
+def release_sqrt(event):
+    btn_sqrt['state'] = 'normal'
+
+def click_pow(event):
+    btn_pow['state'] = 'active'
+    if not (inp['text'][-1] in ('+', '-', '×', '÷', '√', '^')):
+        inp['text'] += '^'
+    else:
+        inp['text'] = inp['text'][:-1] + '^'
+    global new
+    new = False
+    global have_dot
+    have_dot = False
+def release_pow(event):
+    btn_pow['state'] = 'normal'
+
+def click_begin(event):
+    btn_begin['state'] = 'active'
+    global new
+    if not(all_nones() or new):
+        inp['text'] += '('
+    else:
+        inp['text'] = '('
+    new = False
+def release_begin(event):
+    btn_begin['state'] = 'normal'
+
+def click_end(event):
+    btn_end['state'] = 'active'
+    global new
+    if not(all_nones() or new):
+        inp['text'] += ')'
+    new = False
+def release_end(event):
+    btn_end['state'] = 'normal'
+
+def result(event):
+    btn_result['state'] = 'active'
+    text = inp['text']
+    for i in range(len(text)):
+        if text[i] == '×':
+            text = text[:i] + '*' + text[i+1:]
+    for i in range(len(text)):
+        if text[i] == '÷':
+            text = text[:i] + '/' + text[i+1:]
+    i = 0
+    while i < len(text):
+        if text[i] == '^':
+            text = text[:i] + '**' + text[i+1:]
+        i += 1
+    i = 0
+    while i < len(text):
+        if text[i] == '√':
+            op, cl = 0, 0
+            for j in range(i+1, len(text)):
+                if text[j] == '(': op += 1
+                if text[j] == ')': cl += 1
+                if (not(text[j].isdigit() or text[j] == '.') or j == len(text) - 1) and op == cl:
+                    if j == len(text) - 1:
+                        text = text[:i] + 'sqrt(' + text[i+1:j+1] + ')'
+                    else:
+                        text = text[:i] + 'sqrt(' + text[i+1:j] + ')' + text[j:]
+                    i += 4
+                    break
+        i += 1
+    try:
+        res = round_mant(eval(text))
+    except Exception:
+        res = 'ERROR'
+    inp['text'] = str(res)
+    global new
+    new = True
+
+def release_result(event):
+    btn_result['state'] = 'normal'
+
+have_dot = False
+def click_dot(event):
+    btn_dot['state'] = 'active'
+    global have_dot
+    if not have_dot:
+        if inp['text'] != '':
+            inp['text'] += '.'
+        else:
+            inp['text'] += '0.'
+    have_dot = True
+def release_dot(event):
+    btn_dot['state'] = 'normal'
+
+def click_backspace(event):
+    btn_backspace['state'] = 'active'
+    if new:
+        click_del(event)
+        release_del(event)
+    else:
+        inp['text'] = inp['text'][:-1]
+        if inp['text'] == '':
+            inp['text'] = '0'
+        if inp['text'][-1] == '.':
+            global have_dot
+            have_dot = False
+            click_backspace(event)
+def release_backspace(event):
+    btn_backspace['state'] = 'normal'
+
+def click_del(event):
+    btn_del['state'] = 'active'
+    inp['text'] = '0'
+    global ind
+    ind = 0
+    global new
+    new = True
+    global memb_num
+    memb_num = 0
+    member[0] = 0
+    member[1] = 0
+    global have_dot
+    have_dot = False
+
+def release_del(event):
+    btn_del['state'] = 'normal'
+# -----------------------------------------------
+
+pre_tab = Label(root, bg='#1e1e1e', font='Arial 7')
+pre_tab.pack(fill=X, anchor=NW)
+inp = Label(root, bg='#1e1e1e', fg='white', font='Arial 40', justify=RIGHT, text='0', anchor=E)
+inp.pack(fill=X, anchor=NW)
+post_tab = Label(root, bg='#1e1e1e', font='Arial 7')
+post_tab.pack(fill=X, anchor=NW)
+
+# ХОТЕЛ СОЗДАТЬ ВКЛАДКИ: Классика, Дроби, Уравнения.
+# НО ПОНЯЛ, ЧТО НЕ СМОГУ СДЕЛАТЬ НОРМАЛЬНЫЙ ДИЗАЙН ДЛЯ СОДЕРЖИМОГО ЭТИХ ВКЛАДОК И
+# В ЦЕЛОМ ПРОДУМАТЬ КОНЦЕПЦИЮ ВВОДА-ВЫВОДА. КАК-НИБУДЬ В ДРУГОЙ РАЗ. ПУСТЬ БУДЕТ ТОЛЬКО КЛАССИКА
+
+# frame_1 = Frame(root)
+# frame_1.pack(fill=BOTH)
+# btn_classic = Button(frame_1, text='Классика', font='Arial 15', bg='#646464', fg='white', bd=1, state='active', width=12)
+# btn_frac = Button(frame_1, text='Дроби', font='Arial 15', bg='#646464', fg='white', bd=1, width=11)
+# btn_equat = Button(frame_1, text='Уравнения', font='Arial 15', bg='#646464', fg='white', bd=1, width=12)
+# btn_classic.pack(side=LEFT, anchor=NW)
+# btn_frac.pack(side=LEFT, anchor=NW)
+# btn_equat.pack(side=LEFT, anchor=NW, fill=X)
+
+font_digit = 'Arial 15 bold'
+bg_digit = '#323232'
+bg_func = '#464646'
+width_digit = 6
+
+frame_7 = Frame(root)
+frame_7.pack(fill=BOTH, expand=True, side=RIGHT)
+btn_del = Button(frame_7, text='C', font=font_digit, bg=bg_func, fg='white', bd=1, width=width_digit, height = 2)
+btn_del.pack(side=TOP, fill=BOTH)
+btn_del.bind('<Button-1>', click_del)
+btn_end = Button(frame_7, text=')', font=font_digit, bg=bg_func, fg='white', bd=1, width=width_digit, height = 2)
+btn_end.pack(side=TOP, fill=BOTH)
+btn_end.bind('<Button-1>', click_end)
+btn_pow = Button(frame_7, text='^', font=font_digit, bg=bg_func, fg='white', bd=1, width=width_digit, height = 2)
+btn_pow.pack(side=TOP, fill=BOTH)
+btn_pow.bind('<Button-1>', click_pow)
+btn_div = Button(frame_7, text='÷', font=font_digit, bg=bg_func, fg='white', bd=1, width=width_digit, height = 2)
+btn_div.pack(side=TOP, fill=BOTH)
+btn_div.bind('<Button-1>', click_div)
+btn_min = Button(frame_7, text='-', font=font_digit, bg=bg_func, fg='white', bd=1, width=6, height = 2)
+btn_min.pack(side=TOP, fill=BOTH)
+btn_min.bind('<Button-1>', click_min)
+
+frame_6 = Frame(root)
+frame_6.pack(fill=BOTH, expand=True, side=RIGHT)
+btn_backspace = Button(frame_6, text='CE', font=font_digit, bg=bg_func, fg='white', bd=1, width=width_digit, height = 2)
+btn_backspace.pack(side=TOP, fill=BOTH)
+btn_backspace.bind('<Button-1>', click_backspace)
+btn_begin = Button(frame_6, text='(', font=font_digit, bg=bg_func, fg='white', bd=1, width=width_digit, height = 2)
+btn_begin.pack(side=TOP, fill=BOTH)
+btn_begin.bind('<Button-1>', click_begin)
+btn_sqrt = Button(frame_6, text='√', font=font_digit, bg=bg_func, fg='white', bd=1, width=width_digit, height = 2)
+btn_sqrt.pack(side=TOP, fill=BOTH)
+btn_sqrt.bind('<Button-1>', click_sqrt)
+btn_mult = Button(frame_6, text='×', font=font_digit, bg=bg_func, fg='white', bd=1, width=width_digit, height = 2)
+btn_mult.pack(side=TOP, fill=BOTH)
+btn_mult.bind('<Button-1>', click_mult)
+btn_plus = Button(frame_6, text='+', font=font_digit, bg=bg_func, fg='white', bd=1, width=6, height = 2)
+btn_plus.pack(side=TOP, fill=BOTH)
+btn_plus.bind('<Button-1>', click_plus)
+
+frame_5 = Frame(root)
+frame_5.pack(fill=BOTH, expand=True)
+btn_7 = Button(frame_5, text='7', font=font_digit, bg=bg_digit, fg='white', bd=1, width=width_digit)
+btn_7.pack(side=LEFT, fill=Y)
+btn_7.bind('<Button-1>', click_7)
+btn_8 = Button(frame_5, text='8', font=font_digit, bg=bg_digit, fg='white', bd=1, width=width_digit)
+btn_8.pack(side=LEFT, fill=Y)
+btn_8.bind('<Button-1>', click_8)
+btn_9 = Button(frame_5, text='9', font=font_digit, bg=bg_digit, fg='white', bd=1, width=width_digit)
+btn_9.pack(side=LEFT, fill=Y)
+btn_9.bind('<Button-1>', click_9)
+
+frame_4 = Frame(root)
+frame_4.pack(fill=BOTH, expand=True)
+btn_4 = Button(frame_4, text='4', font=font_digit, bg=bg_digit, fg='white', bd=1, width=width_digit)
+btn_4.pack(side=LEFT, fill=Y)
+btn_4.bind('<Button-1>', click_4)
+btn_5 = Button(frame_4, text='5', font=font_digit, bg=bg_digit, fg='white', bd=1, width=width_digit)
+btn_5.pack(side=LEFT, fill=Y)
+btn_5.bind('<Button-1>', click_5)
+btn_6 = Button(frame_4, text='6', font=font_digit, bg=bg_digit, fg='white', bd=1, width=width_digit)
+btn_6.pack(side=LEFT, fill=Y)
+btn_6.bind('<Button-1>', click_6)
+
+frame_3 = Frame(root)
+frame_3.pack(fill=BOTH, expand=True)
+btn_1 = Button(frame_3, text='1', font=font_digit, bg=bg_digit, fg='white', bd=1, width=width_digit)
+btn_1.pack(side=LEFT, fill=Y)
+btn_1.bind('<Button-1>', click_1)
+btn_2 = Button(frame_3, text='2', font=font_digit, bg=bg_digit, fg='white', bd=1, width=width_digit)
+btn_2.pack(side=LEFT, fill=Y)
+btn_2.bind('<Button-1>', click_2)
+btn_3 = Button(frame_3, text='3', font=font_digit, bg=bg_digit, fg='white', bd=1, width=width_digit)
+btn_3.pack(side=LEFT, fill=Y)
+btn_3.bind('<Button-1>', click_3)
+
+frame_2 = Frame(root)
+frame_2.pack(fill=BOTH, expand=True)
+btn_0 = Button(frame_2, text='0', font=font_digit, bg=bg_digit, fg='white', bd=1, width=6)
+btn_0.pack(side=LEFT, fill=Y)
+btn_0.bind('<Button-1>', click_0)
+btn_dot = Button(frame_2, text='.', font=font_digit, bg=bg_digit, fg='white', bd=1, width=6)
+btn_dot.pack(side=LEFT, fill=Y)
+btn_result = Button(frame_2, text='=', font=font_digit, bg='#646464', fg='white', bd=1, width=6)
+btn_result.pack(side=LEFT, fill=Y)
+btn_result.bind('<Button-1>', result)
+
+# ------------------------------------------------------
+root.bind('0', click_0)
+root.bind('<KeyRelease-0>', release_0)
+root.bind('1', click_1)
+root.bind('<KeyRelease-1>', release_1)
+root.bind('2', click_2)
+root.bind('<KeyRelease-2>', release_2)
+root.bind('3', click_3)
+root.bind('<KeyRelease-3>', release_3)
+root.bind('4', click_4)
+root.bind('<KeyRelease-4>', release_4)
+root.bind('5', click_5)
+root.bind('<KeyRelease-5>', release_5)
+root.bind('6', click_6)
+root.bind('<KeyRelease-6>', release_6)
+root.bind('7', click_7)
+root.bind('<KeyRelease-7>', release_7)
+root.bind('8', click_8)
+root.bind('<KeyRelease-8>', release_8)
+root.bind('9', click_9)
+root.bind('<KeyRelease-9>', release_9)
+root.bind('.', click_dot)
+root.bind('<KeyRelease-.>', release_dot)
+root.bind('<BackSpace>', click_backspace)
+root.bind('<KeyRelease-BackSpace>', release_backspace)
+root.bind('<Delete>', click_del)
+root.bind('<KeyRelease-Delete>', release_del)
+root.bind('+', click_plus)
+root.bind('<KeyRelease-+>', release_plus)
+root.bind('-', click_min)
+root.bind('<KeyRelease-->', release_min)
+root.bind('*', click_mult)
+root.bind('<KeyRelease-*>', release_mult)
+root.bind('/', click_div)
+root.bind('<KeyRelease-/>', release_div)
+root.bind('v', click_sqrt)
+root.bind('<KeyRelease-v>', release_sqrt)
+root.bind('^', click_pow)
+root.bind('<KeyRelease-^>', release_pow)
+root.bind('(', click_begin)
+root.bind('<KeyRelease-(>', release_begin)
+root.bind(')', click_end)
+root.bind('<KeyRelease-)>', release_end)
+root.bind('<Return>', result)
+root.bind('<KeyRelease-Return>', release_result)
+
+
+root.mainloop()
